@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports - Bondemala Savings Group</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        [x-cloak] { display: none !important; }
+        .sidebar-link { @apply flex items-center p-3 my-1 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-900 transition-colors; }
+        .sidebar-link.active { @apply bg-indigo-600 text-white hover:bg-indigo-700 hover:text-white; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div x-data="{ sidebarOpen: false, sidebarCollapsed: window.innerWidth < 1024 }" @resize.window="sidebarCollapsed = window.innerWidth < 1024" class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside 
+            class="fixed top-0 left-0 h-full bg-white border-r border-gray-200 transition-transform duration-300 z-50 flex flex-col"
+            :class="{ 'w-64': !sidebarCollapsed, 'w-20': sidebarCollapsed, 'translate-x-0': sidebarOpen, '-translate-x-full': !sidebarOpen }"
+            @click.away="sidebarOpen = false"
+        >
+            <div class="flex items-center justify-between p-4 border-b border-gray-200 h-16" :class="{ 'px-6': !sidebarCollapsed, 'px-4': sidebarCollapsed }">
+                <span class="text-2xl font-bold text-indigo-600" :class="{ 'hidden': sidebarCollapsed }">💰 Bondemala</span>
+                <span class="text-3xl" :class="{ 'block': sidebarCollapsed, 'hidden': !sidebarCollapsed }">💰</span>
+            </div>
+            <nav class="flex-grow p-2">
+                <a href="index.html" class="sidebar-link">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span class="ml-4 transition-opacity" :class="{ 'opacity-0 w-0': sidebarCollapsed, 'opacity-100': !sidebarCollapsed }">Dashboard</span>
+                </a>
+                <a href="members.html" class="sidebar-link">
+                    <i data-lucide="users"></i>
+                    <span class="ml-4 transition-opacity" :class="{ 'opacity-0 w-0': sidebarCollapsed, 'opacity-100': !sidebarCollapsed }">Members</span>
+                </a>
+                <a href="transactions.html" class="sidebar-link">
+                    <i data-lucide="arrow-left-right"></i>
+                    <span class="ml-4 transition-opacity" :class="{ 'opacity-0 w-0': sidebarCollapsed, 'opacity-100': !sidebarCollapsed }">Transactions</span>
+                </a>
+                <a href="loans.html" class="sidebar-link">
+                    <i data-lucide="landmark"></i>
+                    <span class="ml-4 transition-opacity" :class="{ 'opacity-0 w-0': sidebarCollapsed, 'opacity-100': !sidebarCollapsed }">Loans</span>
+                </a>
+                <a href="reports.html" class="sidebar-link active">
+                    <i data-lucide="scroll-text"></i>
+                    <span class="ml-4 transition-opacity" :class="{ 'opacity-0 w-0': sidebarCollapsed, 'opacity-100': !sidebarCollapsed }">Reports</span>
+                </a>
+                <a href="settings.html" class="sidebar-link">
+                    <i data-lucide="settings"></i>
+                    <span class="ml-4 transition-opacity" :class="{ 'opacity-0 w-0': sidebarCollapsed, 'opacity-100': !sidebarCollapsed }">Settings</span>
+                </a>
+            </nav>
+            <div class="p-2 border-t border-gray-200">
+                 <button @click="sidebarCollapsed = !sidebarCollapsed" class="sidebar-link w-full hidden lg:flex" aria-label="Toggle Sidebar">
+                    <i x-show="!sidebarCollapsed" data-lucide="chevrons-left"></i>
+                    <i x-show="sidebarCollapsed" data-lucide="chevrons-right"></i>
+                    <span class="ml-4 transition-opacity" :class="{ 'opacity-0 w-0': sidebarCollapsed, 'opacity-100': !sidebarCollapsed }">Collapse</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main content -->
+        <main class="flex-1 transition-all duration-300" :class="{ 'lg:ml-64': !sidebarCollapsed, 'lg:ml-20': sidebarCollapsed }">
+            <!-- Header -->
+            <header class="flex items-center justify-between p-4 bg-white border-b border-gray-200 sticky top-0 z-40">
+                <div class="flex items-center">
+                    <button @click.stop="sidebarOpen = !sidebarOpen" class="text-gray-500 lg:hidden mr-4">
+                        <i data-lucide="menu"></i>
+                    </button>
+                    <h1 class="text-xl font-semibold">Reports</h1>
+                </div>
+                 <div class="flex items-center space-x-4">
+                    <span class="hidden sm:block">Admin</span>
+                    <img src="https://i.pravatar.cc/40" alt="Admin user avatar" class="w-10 h-10 rounded-full">
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="p-6">
+                <div class="bg-white p-6 rounded-xl shadow-md max-w-2xl mx-auto">
+                    <h2 class="text-lg font-semibold mb-6">Generate Report</h2>
+                    <form>
+                        <div class="mb-4">
+                            <label for="reportType" class="block text-sm font-medium text-gray-700 mb-1">Report Type</label>
+                            <select id="reportType" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                <option>Monthly Savings Report</option>
+                                <option>Loan Repayment Report</option>
+                                <option>Member Statements</option>
+                                <option>Full Transaction Log</option>
+                            </select>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label for="startDate" class="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+                                <input type="date" id="startDate" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            </div>
+                            <div>
+                                <label for="endDate" class="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+                                <input type="date" id="endDate" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="memberSelect" class="block text-sm font-medium text-gray-700 mb-1">Select Member (optional)</label>
+                            <select id="memberSelect" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                <option>All Members</option>
+                                <option>Jane Doe</option>
+                                <option>John Smith</option>
+                                <option>Peter Jones</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <button type="submit" class="w-full bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center justify-center gap-2">
+                                <i data-lucide="download"></i>
+                                <span>Generate & Download</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
